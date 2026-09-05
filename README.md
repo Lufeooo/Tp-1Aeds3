@@ -3,3 +3,6 @@ Este projeto implementa um sistema de gerenciamento de banco de dados baseado em
 
 ##  Como rodar
 Para rodar esse progama é necessario executar o main e escolher a opção que gostaria de testar, mas primeiro e importante executar o banco primeiro(execute o main e clique 1)
+
+## Video
+https://drive.google.com/file/d/1lcpmB3wY98qgomgZs7mXIigWZThrk00b/view?usp=sharing
