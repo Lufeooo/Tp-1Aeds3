@@ -311,6 +311,7 @@ public class Arquivo {
         return jogo;
     }
     // juntar o antigo com o novo
+    // serve para o jogos ordenados virar jogos.db
 public void substituirArquivoOrdenado() throws IOException {
 
     arquivo.close();
@@ -319,11 +320,11 @@ public void substituirArquivoOrdenado() throws IOException {
     File novo = new File("jogos_ordenados.db");
 
     if (!antigo.delete()) {
-        throw new IOException("Erro nos jogos.db.");
+       // throw new IOException("Erro");
     }
 
     if (!novo.renameTo(antigo)) {
-        throw new IOException("Erro ao renomear o arquivo ordenado");
+        //throw new IOException("Erro");
     }
 
     arquivo = new RandomAccessFile("jogos.db", "rw");
@@ -334,7 +335,7 @@ public void intercalarBlocos(int caminhos) throws IOException {
 
     // Conta quantos blocos foram criados
     int quantidadeBlocos = 0;
-
+    // contar quantos existem
     while (new File("bloco" + quantidadeBlocos + ".db").exists()) {
         quantidadeBlocos++;
     }
@@ -359,9 +360,10 @@ public void intercalarBlocos(int caminhos) throws IOException {
         if (ordenado.exists()) {
             ordenado.delete();
         }
-
+        // leitura 
         RandomAccessFile entrada =new RandomAccessFile(bloco, "r");
 
+        // leitura e escrita
         RandomAccessFile saida =new RandomAccessFile(ordenado, "rw");
 
         saida.setLength(0);
@@ -374,6 +376,7 @@ public void intercalarBlocos(int caminhos) throws IOException {
         byte[] buffer = new byte[8192];
         int lidos;
 
+        // passar para o arquivo ordenado
         while ((lidos = entrada.read(buffer)) != -1) {
             saida.write(buffer, 0, lidos);
         }
@@ -443,7 +446,7 @@ public void intercalarBlocos(int caminhos) throws IOException {
                             menorIndice = i;
                         }
                         else if (atuais[i].getId()< atuais[menorIndice].getId()) {
-
+                            // encontrou id menor atualiza passando ele como menor
                             menorIndice = i;
                         }
                     }
@@ -452,12 +455,14 @@ public void intercalarBlocos(int caminhos) throws IOException {
                 // Pega o menor jogo
                 Jogo menor = atuais[menorIndice];
 
-                byte[] vetor =
-                        menor.byteparaArray();
+                byte[] vetor = menor.byteparaArray();
 
                 // Grava o jogo
+                //lapide
                 saida.writeByte(0);
+                //tamanho
                 saida.writeInt(vetor.length);
+                // dados o resto
                 saida.write(vetor);
 
                 // Le o próximo jogo daquele bloco
@@ -469,10 +474,7 @@ public void intercalarBlocos(int caminhos) throws IOException {
             }
 
             // Fecha os blocos
-            for (int i = 0;
-                 i < quantidadeParaIntercalar;
-                 i++) {
-
+            for (int i = 0; i < quantidadeParaIntercalar;i++) {
                 blocos[i].close();
             }
 
@@ -494,11 +496,9 @@ public void intercalarBlocos(int caminhos) throws IOException {
          // Os arquivos merge viram os blocos
         for (int i = 0; i < novosBlocos; i++) {
 
-            File antigo =
-                    new File("merge"+ rodada+ "_"+ i+ ".db");
+            File antigo =new File("merge"+ rodada+ "_"+ i+ ".db");
 
-            File novo =
-                    new File("bloco" + i + ".db");
+            File novo = new File("bloco" + i + ".db");
 
             if (!antigo.renameTo(novo)) { throw new IOException("Erro ao renomear");
             }
@@ -507,6 +507,7 @@ public void intercalarBlocos(int caminhos) throws IOException {
         quantidadeBlocos = novosBlocos;
         rodada++;
     }
+    // aqui saiu do while la de cima
 
     
       //Sobra  apenas bloco0.db e ele fica com tudo ordenado la entao pronto
@@ -534,6 +535,7 @@ public void intercalarBlocos(int caminhos) throws IOException {
     byte[] buffer = new byte[8192];
     int lidos;
 
+    // salva tudo no arquivo
     while ((lidos = entrada.read(buffer)) != -1) {
         saida.write(buffer, 0, lidos);
     }
@@ -545,7 +547,7 @@ public void intercalarBlocos(int caminhos) throws IOException {
     if (!blocoFinal.delete()) {
         throw new IOException("Erro ao apagar bloco final.");
     }
-     // O arquivo ordenado passa a ser o jogos.db.
+     // isso aqui e so pra o jogos_ordenados ficar como jogos.db para sempre utilizarmos o ordenado
     substituirArquivoOrdenado();
 
     System.out.println("Merge concluído.");
