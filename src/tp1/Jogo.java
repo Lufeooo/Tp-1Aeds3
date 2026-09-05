@@ -1,4 +1,4 @@
-package tp1.src.tp1;
+package tp1;
 
 import java.io.*;
 

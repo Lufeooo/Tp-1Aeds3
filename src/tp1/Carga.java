@@ -1,4 +1,4 @@
-package tp1.src.tp1;
+package tp1;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -43,7 +43,7 @@ public static void main(String[] args) throws Exception {
 
     Arquivo arquivo = new Arquivo("jogos.db");
 
-    csv("tp1/steam.csv", arquivo);
+    csv("steam.csv", arquivo);
 
     System.out.println("Carga finalizada!");
 }
