@@ -1,4 +1,4 @@
-package tp1.tp1;
+package tp1.src.tp1;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
