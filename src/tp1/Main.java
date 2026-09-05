@@ -1,5 +1,6 @@
 package tp1;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
@@ -16,11 +17,12 @@ public class Main {
         // escolheu 0 cabo
         while (opcao != 0) {
 
-            System.out.println("1 - Criar jogo");
-            System.out.println("2 - Ler jogo");
-            System.out.println("3 - Atualizar jogo");
-            System.out.println("4 - Deletar jogo");
-            System.out.println("5 - Ordenar arquivo");
+            System.out.println("1 - Carregar banco de dados (CSV)");
+            System.out.println("2 - Criar jogo");
+            System.out.println("3 - Ler jogo");
+            System.out.println("4 - Atualizar jogo");
+            System.out.println("5 - Deletar jogo");
+            System.out.println("6 - Ordenar arquivo");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -28,8 +30,38 @@ public class Main {
 
             // executa a opção escolhida
             switch (opcao) {
-
+                
                 case 1:
+                    // lista de caminhos para o programa tentar encontrar o arquivo
+                    // isso e importante para conseguir rodar em outros pc, pq quando dava git clone nao rodava
+                    String[] caminhosPossiveis = {
+                        "steam.csv",                 
+                        "Tp-1Aeds3/steam.csv",       
+                        "../steam.csv",              
+                        "/tmp/steam.csv"            
+                    };
+
+                    String caminhoCorreto = null;
+
+                    // testar o caminho ate achar o certo
+                    for (String caminho : caminhosPossiveis) {
+                        if (new File(caminho).exists()) {
+                            caminhoCorreto = caminho;
+                            break;
+                        }
+                    }
+
+                    // deu erro nao conseguiu criar por causa de erro
+                    if (caminhoCorreto == null) {
+                        System.out.println("Erro: csv nao encontrado");
+                    } else {
+                        // Roda a carga com o caminho que funcionou
+                        Carga.csv(caminhoCorreto, arquivo);
+                        System.out.println("Carga finalizada!");
+                    }
+                    break;
+
+                case 2:
 
                     // o nome
                     System.out.print("Digite o nome do jogo: ");
@@ -85,7 +117,7 @@ public class Main {
 
                     break;
 
-                case 2:
+                case 3:
                     System.out.print("Digite o ID do jogo: ");
                     int id = scanf.nextInt();
 
@@ -111,7 +143,7 @@ public class Main {
 
                     break;
 
-                case 3:
+                case 4:
                     // Pedir o ID do jogo que será atualizado
                     System.out.print("Digite o ID do jogo: ");
                     int idUpdate = scanf.nextInt();
@@ -188,7 +220,7 @@ public class Main {
                     }
                     break;
 
-                case 4:
+                case 5:
 
                     // ID do jogo
                     System.out.print("Digite o ID do jogo: ");
@@ -206,7 +238,7 @@ public class Main {
 
                     break;
 
-                case 5:
+                case 6:
                     System.out.println("Ordenação externa");
                     System.out.print("Digite o número de caminhos: ");
                     int caminhos = scanf.nextInt();
@@ -226,6 +258,8 @@ public class Main {
                     break;
 
                 case 0:
+                    // fechar o manipulador
+                    arquivo.fechar();
                     break;
 
                 default:

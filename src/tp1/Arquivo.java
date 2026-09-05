@@ -584,4 +584,10 @@ public void intercalarBlocos(int caminhos) throws IOException {
 
     System.out.println("Merge concluído.");
 }
+// criar um arquivo para dar close para evitar algum tipo de erro
+public void fechar() throws IOException {
+        if (arquivo != null) {
+            arquivo.close();
+        }
+    }
 }

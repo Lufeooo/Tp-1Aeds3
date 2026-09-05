@@ -39,39 +39,5 @@ public class Carga {
         }
         ler.close();
     }
-public static void main(String[] args) throws Exception {
-
-    Arquivo arquivo = new Arquivo("jogos.db");
-
-    // lista de caminhos para o programa tentar encontrar o arquivo
-    // isso e importante para conseguir rodar em outros pc, pq quando dava git clone nao rodava
-    String[] caminhosPossiveis = {
-        "steam.csv",                 
-        "Tp-1Aeds3/steam.csv",       
-        "../steam.csv",              
-        "/tmp/steam.csv"            
-    };
-
-    String caminhoCorreto = null;
-
-    //  // testar o caminho ate achar o certo
-    for (String caminho : caminhosPossiveis) {
-        if (new File(caminho).exists()) {
-            caminhoCorreto = caminho;
-            break;
-        }
-    }
-
-    //     // deu erro nao conseguiu criar por causa de erro
-    if (caminhoCorreto == null) {
-        System.out.println("Erro");
-        return; 
-    }
-
-    // Roda a carga com o caminho que funcionou
-    csv(caminhoCorreto, arquivo);
-
-    System.out.println("Carga finalizada!");
-}
 
 }
